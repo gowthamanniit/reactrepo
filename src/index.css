@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.myclass
+{
+  background-color: green;
+  border:10px solid red;
+  color:white;
+}

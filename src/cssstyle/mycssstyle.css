@@ -1,0 +1,14 @@
+h5
+{
+    font-size: 33px;
+    font-family: 'Courier New', Courier, monospace;
+    border:10px solid green;
+    border-radius: 20px;
+    color: white;
+}
+div
+{
+    /* background-color: orange; */
+    background-image: url("../images/pic1.jfif");
+    background-size: cover;
+}
