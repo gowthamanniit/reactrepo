@@ -1,3 +1,384 @@
+import { Component } from "react";
+class Child extends Component
+{
+  render()
+  {
+    return(
+      <>
+        <h1>This is child component</h1>
+        <h1>This is child component</h1>
+        <h1>This is child component</h1>
+        <h1>This is child component</h1>
+        <hr></hr>
+      </>
+    )
+  }
+
+}
+class App extends Child
+{
+  render()
+  {
+    return(
+      <>
+      <Child/>
+      <h1>This is parent Component</h1>
+      <button onClick={hideChild}>remove child component</button>
+      </>
+    )
+  }
+}
+export default App
+
+
+//import React from "react";
+//class App extends React.Component
+/*
+import { Component } from "react"
+class App extends Component
+{ 
+  constructor(props)
+  {
+    super(props)
+    this.state=this.props.myobj
+    this.state.curdt=new Date();
+    console.log("constructor called")
+  }
+  componentDidMount()
+  {
+    setTimeout(()=>{this.setState({rno:1234})},4000)
+  }
+  componentDidUpdate()
+  {
+    document.getElementById("r1").innerHTML="component updated"
+  }
+  shouldComponentUpdate()
+  {
+    return true;
+  }
+  getSnapshotBeforeUpdate(prevState,prevProps)
+  {
+    
+    document.getElementById("r2").innerHTML="Old Value:"+prevProps.rno+" "+prevProps.curdt;
+    document.getElementById("r3").innerHTML="New Value:"+this.state.rno+" "+new Date();
+    return this.state;
+  } 
+  render()
+  {
+    const updatefun=()=>{
+      var newrno=parseInt(document.getElementById("t1").value);
+      this.setState({rno:newrno})
+    }
+    
+    const reloadfun=()=>{
+      window.location.reload()
+    }
+    return(
+      <>
+        <h1>2.update life cycle components</h1>
+        <h2>{this.state.rno}</h2>
+        <div id="r1"></div>
+        <div id="r2"></div>
+        <div id="r3"></div>
+        <input type="text" id="t1" placeholder="Enter new rno"></input>
+        <button onClick={updatefun}>update rno</button>
+        <button onClick={reloadfun} >refresh</button> 
+      </>
+    )
+  }
+}
+export default App
+/*
+import React from "react";
+class App extends React.Component
+{
+  constructor(props)
+  {
+    super(props)
+    this.state=props.myobj
+  }
+  componentDidMount()
+  {
+    setTimeout(()=>{ this.setState({rno:1992})},4000)
+  }
+  render()
+  {
+    return(<>    
+        <h1>This is life cycle of React - only class component</h1>    
+        <h2>Roll Number:{this.state.rno}</h2>
+        <h2>Student Name:{this.state.sname}</h2>
+        <h2>Tamil:{this.state.marks.tamil}</h2>
+        
+    </>)
+  }
+}
+export default App
+/*
+import { useState } from "react"
+function App(props)
+{
+  const[obj,setObj]=useState(props.myobj)
+  const show=()=>{
+    setObj({rno:1009,sname:"karthi"})
+  }
+  return(
+    <>
+      <h1>{obj.rno}</h1>
+      <h1>{obj.sname}</h1>
+      <button onClick={show}>change</button>
+    </>
+  )
+}
+export default App
+
+/*
+import { useState } from "react"
+function App(props)
+{
+  const[rno,setRno]=useState(props.myobj.rno)
+  return(
+    <>
+      <h1>{rno}</h1>
+      {props.myobj.sname}
+    </>
+  )
+}
+export default App
+*/
+/*
+import React from "react";
+class App extends React.Component
+{
+  constructor(props)
+  {
+    super(props)
+    this.state={
+      rno:this.props.myobj.rno,
+      sname:this.props.myobj.sname      
+    }
+  }
+  componentDidMount()
+  {
+    setTimeout(()=>{this.setState({rno:1992})},4000)
+  }
+  render()
+  {
+    return(<>    
+        <h1>This is life cycle of React - only class component</h1>    
+        <h2>Roll Number:{this.state.rno}</h2>
+        <h2>Student Name:{this.state.sname}</h2>
+        
+    </>)
+  }
+}
+export default App
+/*
+import { useState } from "react"
+function App()
+{
+  const[un,setUn]=useState("-")
+  const[pw,setPw]=useState("*")
+  const[city,setCity]=useState("*")
+
+  const dis=(event)=>{
+    if (event.target.id==="un")
+      setUn(event.target.value)
+    if (event.target.id==="pw")
+      setPw(event.target.value)
+    if (event.target.id==="city")
+        setCity(event.target.value)
+  }
+  const show=()=>{
+    var sobj={
+      uname:un,
+      pword:pw,
+      city:city
+    }
+    console.log(sobj)
+  }
+  return(
+    <>
+      <input type="text" id="un"  onChange={(e)=>dis(e)}></input>
+      <br></br>
+      <input type="text" id="pw"  onChange={(e)=>dis(e)}></input>
+      <br></br>
+      <input type="text" id="city"  onChange={(e)=>dis(e)}></input>
+      <br></br>
+      <button onClick={show}>json</button>
+    
+      
+    </>
+  )
+
+
+}
+export default App
+*/
+/*
+import { useForm } from "react-hook-form";
+function App()
+{
+  const{register,handleSubmit,formState:{errors}}=useForm()
+  const dis=(sobj)=>{
+    console.log(sobj)
+    console.log(sobj.unam)
+    console.log(sobj.paw)
+    console.log(sobj.city)
+  }
+  return(
+    <form onSubmit={handleSubmit(dis)}>
+      <input type="text"  {...register("unam",{required:true,minLength:3})}></input>
+      {errors.unam && errors.unam.type==="required" && "Must Fill username"}
+      {errors.unam && errors.unam.type==="minLength" && "type 3 chars"}
+      <br></br>
+      <input type="password"  {...register("paw",{minLength:5})}></input>
+      {errors.paw && errors.paw.type==="minLength" && <font color='red'>type atleast 5 chars</font>}
+      <br></br>
+      <input type="text" {...register("city",{maxLength:10})}></input>
+      {errors.city && errors.city.type==="maxLength" && "do not exceed 10 chars"}
+      <br></br>
+      <input type="submit"></input>
+
+    </form>
+  )
+}
+export default App
+/*
+import { useState,useEffect } from "react"
+function App()
+{
+  const[count,setCount]=useState(0)
+
+  useEffect(()=>{
+    setTimeout(()=>{document.title="gowthaman"+count},4000)
+    if(count===0)
+      setCount(10)
+  })
+
+  const dis=()=>{
+    document.title="manoj"
+     setCount(count+1)
+  }
+
+  return(
+    <>
+    <button onClick={dis}>click me</button>
+    <h1>Count:{count}</h1>  
+    </>
+  )
+}
+export default App
+/*
+import { useState } from "react"
+function App()
+{
+  const[name,setName]=useState("----")
+  const[count,setCount]=useState(0)
+  
+  const dis=(e)=>{
+    
+    setName(e.target.value)
+    setCount(count+1)     
+  }
+  return(
+    <>
+      <input type="text" value={name} onChange={(e)=>dis(e)}></input><br></br>
+     {count}
+      
+    </>
+  )
+}
+export default App
+
+/*
+function App()
+{
+  const dis=(e)=>{
+    document.getElementById("res").innerHTML=e.target.type+" type working..."
+  }
+  return(
+    <>
+      <input type="text" onChange={(e)=>dis(e)}></input><br></br>
+      <input type="password" onChange={(e)=>dis(e)}></input><br></br>
+      <input type="file" onChange={(e)=>dis(e)}></input><br></br>
+      <input type="radio" onChange={(e)=>dis(e)}></input>Male<br></br>
+      <input type="radio" onChange={(e)=>dis(e)}></input>FeMale<br></br>
+      <input type="checkbox" onChange={(e)=>dis(e)}></input>C++<br></br>
+      
+      <div id="res"></div>
+    </>
+  )
+}
+export default App
+/*
+function App()
+{
+  const dis=(e)=>{
+    document.getElementById("res").innerHTML=e.target.tagName+" working..."
+  }
+  return(
+    <>
+      <input type="text" onChange={(e)=>dis(e)}></input><br></br>
+      <textarea rows="6" cols="20"  onChange={(e)=>dis(e)}></textarea><br></br>
+      <select  onChange={(e)=>dis(e)}>
+      <option>sunday</option>
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+      <option>Saturday</option>
+      </select>
+      <div id="res"></div>
+    </>
+  )
+}
+export default App
+/*
+function App()
+{
+  
+  const dis=(e)=>{
+    var k=e.target.value
+    document.getElementById("res").innerHTML=k+" is typing.."+e.target.name+" box"
+  }
+  return(
+    <>
+      <h1>Event.target.value usage</h1>
+      User Name:<input type="text" name="username" onChange={(event)=>dis(event)}></input>
+      <br></br>
+      Password:<input type="password" name="password" onChange={(event)=>dis(event)}></input>
+      <br></br>
+      city:<input type="text" name="city" onChange={(event)=>dis(event)}></input>
+      <br></br>
+      <div id="res"></div>
+    </>
+  )
+}
+export default App
+/*
+function App()
+{
+  const disp=(event)=>
+    {
+    event.preventDefault() /* don't refresh */
+  /*  document.getElementById("res").innerHTML="submit button pressed"
+    }
+  return(
+    <center>
+        <h1>onsubmit event</h1>
+        <form onSubmit={(e)=>disp(e)}>
+          <input type="text"></input>
+          <input type="submit"></input>
+          <button>clickme</button>
+          <input type="button" value="click me normal"></input>
+          <div id="res"></div>
+        </form>
+    </center>
+  )
+}
+export default App
+/*
 function App()
 {
   
