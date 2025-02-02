@@ -1,38 +1,105 @@
+import axios from "axios";
+import { useState } from "react";
+function App()
+{
+  const[city,setCity]=useState("")
+  const[output,setOutput]=useState(null)
+  const cityfun=(e)=>{
+    setCity(e.target.value)
+  }
+  const showreport=()=>{
+    const apikey="64c091641c9cf898282309ebcc6e1d1d"
+    var apiurl=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
+    //console.log(apiurl)
+    
+    axios.post(apiurl).then((res)=>{
+      //console.log(res.data)
+      setOutput(res.data)
+    }).catch((err)=>{
+      console.log(err.response.data)
+      setOutput(err.response.data)
+    })
+  }
+  return(
+    <>
+    <h1>Axios</h1>
+    <input type="text" onChange={(e)=>cityfun(e)} placeholder="Enter city name" value={city}></input>
+    <br></br>
+    <input type="button" onClick={showreport} value="get weather report"></input>
+    <br></br>
+
+    {output!==null && output.cod===200 && 
+    <>
+    <h2>{output!==null && "Main:" + output.weather[0].main}</h2>
+    <h2>{output!==null && "Detailed Description:"+output.weather[0].description}</h2>
+    <h2>{output!==null && "wind speed:"+output.wind.speed}</h2>    
+    </>
+    }
+{output!==null && output.cod==="404" && <h1>{output.message}</h1>}
+{output!==null && output.cod==="400" && <h1>{output.message}</h1>}
+    </>
+  )
+}
+export default App
+/*
 import { Component } from "react";
 class Child extends Component
 {
+   componentWillUnmount()
+  {    
+    console.log("removed")  
+  }
   render()
   {
     return(
-      <>
-        <h1>This is child component</h1>
+      <div>
         <h1>This is child component</h1>
         <h1>This is child component</h1>
         <h1>This is child component</h1>
         <hr></hr>
-      </>
+      </div>
     )
   }
-
 }
 class App extends Child
 {
+  
+  constructor()
+  {
+    super()
+    this.state={
+      show:true,
+        msg:""
+    }
+  }
+  hidecomp=()=>{    
+    this.setState({show:false,msg:"removed child"})
+   }
   render()
   {
+    let isShow
+    if(this.state.show===true)
+    {      
+      isShow=<Child/>    
+    }      
     return(
       <>
-      <Child/>
-      <h1>This is parent Component</h1>
-      <button onClick={hideChild}>remove child component</button>
+        {isShow}
+          <h1>This is App Component</h1>
+        <h1>This is App Component</h1>
+        <h1>This is App Component</h1>
+        <h1>This is App Component</h1>
+        <button onClick={this.hidecomp}>remove child</button>
+        {this.state.msg}
       </>
     )
   }
 }
 export default App
 
-
 //import React from "react";
 //class App extends React.Component
+
 /*
 import { Component } from "react"
 class App extends Component
@@ -46,7 +113,7 @@ class App extends Component
   }
   componentDidMount()
   {
-    setTimeout(()=>{this.setState({rno:1234})},4000)
+    setTimeout(()=>{this.setState({rno:1234,curdt:new Date()})},4000)
   }
   componentDidUpdate()
   {
@@ -60,14 +127,14 @@ class App extends Component
   {
     
     document.getElementById("r2").innerHTML="Old Value:"+prevProps.rno+" "+prevProps.curdt;
-    document.getElementById("r3").innerHTML="New Value:"+this.state.rno+" "+new Date();
+    document.getElementById("r3").innerHTML="New Value:"+this.state.rno+" "+this.state.curdt;
     return this.state;
   } 
   render()
   {
     const updatefun=()=>{
       var newrno=parseInt(document.getElementById("t1").value);
-      this.setState({rno:newrno})
+      this.setState({rno:newrno,curdt:new Date()})
     }
     
     const reloadfun=()=>{
